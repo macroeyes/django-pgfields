@@ -22,7 +22,11 @@ class CoerciveList(list):
         return super(CoerciveList, self).__repr__()
 
     def append(self, item):
-        item = self.coerce(item)
+        # hacky fix to get around it trying to coerce() a CoerciveList
+        try:
+            item = self.coerce(item)
+        except Exception:
+            pass
         super(CoerciveList, self).append(item)
 
     def extend(self, iterable):
